@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samreen Khanam — Full Stack Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ink: #0f0e17;
+            --cream: #fffcf5;
+            --accent: #e63946;
+            --gold: #f4a261;
+            --muted: #6b6b7b;
+            --surface: #ffffff;
+            --border: #e8e4da;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--ink);
+            line-height: 1.6;
+        }
+
+        /* HEADER */
+        .header {
+            background: var(--ink);
+            color: var(--cream);
+            padding: 52px 52px 44px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: 'SK';
+            position: absolute;
+            right: -10px; bottom: -50px;
+            font-family: 'Playfair Display', serif;
+            font-size: 200px; font-weight: 900;
+            color: rgba(255,255,255,0.04);
+            line-height: 1;
+            pointer-events: none; user-select: none;
+        }
+
+        .header-inner {
+            position: relative; z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 32px; flex-wrap: wrap;
+        }
+
+        .name-block h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            font-weight: 900; letter-spacing: -1px;
+            line-height: 1.05; margin-bottom: 10px; color: white;
+        }
+
+        .name-block h1 span { color: var(--accent); }
+
+        .title-pill {
+            display: inline-block;
+            background: var(--accent); color: white;
+            padding: 5px 16px; border-radius: 3px;
+            font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+            margin-bottom: 22px;
+        }
+
+        .exp-badge {
+            display: flex; align-items: center; gap: 12px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px; padding: 14px 20px;
+            flex-shrink: 0; align-self: flex-start; margin-top: 4px;
+        }
+
+        .exp-badge .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem; font-weight: 900;
+            color: var(--accent); line-height: 1;
+        }
+
+        .exp-badge .lbl {
+            font-size: 0.78rem; color: rgba(255,255,255,0.55);
+            line-height: 1.5; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        .exp-badge .lbl strong {
+            display: block; font-size: 0.9rem;
+            color: rgba(255,255,255,0.9);
+            text-transform: none; letter-spacing: 0;
+        }
+
+        .contact-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+        .chip {
+            display: flex; align-items: center; gap: 7px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.11);
+            padding: 7px 14px; border-radius: 4px;
+            font-size: 0.82rem; color: rgba(255,255,255,0.82);
+            transition: all 0.22s; text-decoration: none;
+        }
+
+        .chip:hover { background: var(--accent); border-color: var(--accent); color: white; }
+
+        .summary-bar {
+            margin-top: 28px;
+            border-left: 3px solid var(--accent);
+            padding-left: 18px; position: relative; z-index: 1;
+        }
+
+        .summary-bar p {
+            font-size: 0.94rem; color: rgba(255,255,255,0.72); line-height: 1.85;
+        }
+
+        .summary-bar p strong { color: rgba(255,255,255,0.95); font-weight: 600; }
+
+        /* LAYOUT */
+        .layout { display: grid; grid-template-columns: 290px 1fr; }
+
+        /* SIDEBAR */
+        .sidebar {
+            background: var(--ink);
+            padding: 36px 24px;
+            display: flex; flex-direction: column; gap: 30px;
+        }
+
+        .ss-title {
+            font-size: 0.7rem; letter-spacing: 2.5px;
+            text-transform: uppercase; color: var(--accent);
+            font-weight: 600; margin-bottom: 13px;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .ss-title::after {
+            content: ''; flex: 1; height: 1px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .tag-group { margin-bottom: 12px; }
+
+        .tg-label {
+            font-size: 0.68rem; color: rgba(255,255,255,0.35);
+            text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 7px; font-weight: 500;
+        }
+
+        .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+
+        .tag {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.11);
+            color: rgba(255,255,255,0.82);
+            padding: 4px 11px; border-radius: 3px;
+            font-size: 0.76rem; font-weight: 500;
+            transition: all 0.2s; cursor: default;
+        }
+
+        .tag:hover { background: var(--accent); border-color: var(--accent); color: white; }
+
+        .agile-badge {
+            background: linear-gradient(135deg, rgba(230,57,70,0.18), rgba(244,162,97,0.12));
+            border: 1px solid rgba(230,57,70,0.32);
+            border-radius: 8px; padding: 14px 16px; text-align: center;
+        }
+
+        .agile-badge .ab-t { font-size: 0.92rem; font-weight: 700; color: white; margin-bottom: 5px; }
+        .agile-badge .ab-s { font-size: 0.74rem; color: rgba(255,255,255,0.52); line-height: 1.6; }
+
+        .soft-list { display: flex; flex-direction: column; gap: 8px; }
+
+        .soft-item {
+            display: flex; align-items: center; gap: 9px;
+            font-size: 0.81rem; color: rgba(255,255,255,0.76);
+        }
+
+        .sdot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--accent); flex-shrink: 0;
+        }
+
+        .tool-list { list-style: none; }
+
+        .tool-list li {
+            display: flex; align-items: center; gap: 8px;
+            padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.8rem; color: rgba(255,255,255,0.7);
+        }
+
+        .tool-list li::before { content: '▸'; color: var(--accent); font-size: 0.7rem; }
+
+        .edu-item {
+            margin-bottom: 13px; padding-bottom: 13px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .edu-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .edu-deg { font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.9); line-height: 1.3; }
+        .edu-sch { font-size: 0.75rem; color: var(--gold); margin-top: 3px; line-height: 1.4; }
+
+        /* MAIN */
+        .main {
+            background: var(--cream);
+            padding: 36px 40px;
+            display: flex; flex-direction: column; gap: 32px;
+        }
+
+        .sec-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 700; color: var(--ink);
+            margin-bottom: 18px;
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        .sec-title::after { content: ''; flex: 1; height: 2px; background: var(--border); }
+
+        .sec-icon {
+            width: 30px; height: 30px; background: var(--accent);
+            border-radius: 6px; display: grid; place-items: center;
+            font-size: 0.88rem; flex-shrink: 0;
+        }
+
+        /* Timeline */
+        .timeline { padding-left: 18px; position: relative; }
+
+        .timeline::before {
+            content: ''; position: absolute;
+            left: 0; top: 8px; bottom: 8px;
+            width: 2px; background: var(--border);
+        }
+
+        .tl-item {
+            position: relative; padding-left: 22px; margin-bottom: 24px;
+        }
+
+        .tl-item:last-child { margin-bottom: 0; }
+
+        .tl-item::before {
+            content: ''; position: absolute;
+            left: -22px; top: 7px;
+            width: 10px; height: 10px;
+            background: var(--accent); border-radius: 50%;
+            border: 2px solid var(--cream);
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        .tl-head {
+            display: flex; justify-content: space-between;
+            align-items: flex-start; gap: 12px;
+            margin-bottom: 5px; flex-wrap: wrap;
+        }
+
+        .tl-title { font-size: 1rem; font-weight: 700; color: var(--ink); }
+        .tl-org { font-size: 0.85rem; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
+
+        .tl-date {
+            font-size: 0.75rem; background: var(--ink); color: white;
+            padding: 3px 11px; border-radius: 20px; white-space: nowrap; flex-shrink: 0;
+        }
+
+        .tl-body { font-size: 0.85rem; color: #444; line-height: 1.75; }
+        .tl-body ul { padding-left: 16px; margin-top: 6px; }
+        .tl-body li { margin-bottom: 4px; }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+            gap: 16px;
+        }
+
+        .proj-card {
+            border: 1px solid var(--border); border-radius: 10px;
+            padding: 20px; background: var(--surface);
+            transition: all 0.25s ease; position: relative; overflow: hidden;
+        }
+
+        .proj-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+        }
+
+        .proj-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.09); transform: translateY(-3px); }
+
+        .proj-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem; font-weight: 900; color: var(--border); line-height: 1; margin-bottom: 6px;
+        }
+
+        .proj-title { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 7px; }
+        .proj-desc { font-size: 0.81rem; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+        .proj-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+
+        .proj-tag {
+            font-size: 0.72rem; background: #f0ede6; color: var(--ink);
+            padding: 3px 9px; border-radius: 3px; font-weight: 500;
+        }
+
+        /* Achievements */
+        .achieve-list { display: flex; flex-direction: column; gap: 11px; }
+
+        .achieve-item {
+            display: flex; gap: 12px; padding: 13px 15px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 8px; transition: all 0.2s;
+        }
+
+        .achieve-item:hover { border-color: var(--accent); box-shadow: 0 4px 14px rgba(230,57,70,0.07); }
+
+        .ach-icon {
+            width: 33px; height: 33px;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            border-radius: 7px; display: grid; place-items: center;
+            font-size: 0.92rem; flex-shrink: 0;
+        }
+
+        .ach-text strong { display: block; font-size: 0.87rem; color: var(--ink); margin-bottom: 2px; }
+        .ach-text span { font-size: 0.8rem; color: var(--muted); line-height: 1.55; }
+
+        /* Roles box */
+        .roles-box {
+            background: var(--ink); color: rgba(255,255,255,0.8);
+            padding: 22px 26px; border-radius: 10px;
+            font-size: 0.9rem; line-height: 1.85; font-style: italic;
+        }
+
+        /* Declaration */
+        .decl-box {
+            border: 1px solid var(--border); border-radius: 8px;
+            padding: 18px 22px; font-size: 0.85rem;
+            color: var(--muted); line-height: 1.7; background: var(--surface);
+        }
+
+        .decl-box strong { color: var(--ink); }
+
+        /* FAB */
+        .fab {
+            position: fixed; bottom: 26px; right: 26px;
+            background: var(--accent); color: white;
+            padding: 13px 24px; border-radius: 50px;
+            font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.88rem;
+            cursor: pointer; border: none;
+            box-shadow: 0 6px 22px rgba(230,57,70,0.4);
+            display: flex; align-items: center; gap: 7px;
+            transition: all 0.22s; z-index: 999;
+        }
+
+        .fab:hover { background: #c1121f; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(230,57,70,0.5); }
+
+        /* RESPONSIVE */
+        @media (max-width: 860px) {
+            .layout { grid-template-columns: 1fr; }
+            .header { padding: 36px 22px 30px; }
+            .main { padding: 22px 18px; }
+            .sidebar { padding: 22px 18px; }
+            .exp-badge { width: 100%; }
+        }
+
+        /* PRINT */
+        @media print {
+            .fab { display: none !important; }
+            body { background: white !important; font-size: 10pt; }
+
+            .header, .sidebar, .roles-box,
+            .header *, .sidebar * {
+                background: white !important;
+                color: #111 !important;
+                -webkit-text-fill-color: #111 !important;
+                border-color: #ddd !important;
+            }
+
+            .header { padding: 18px 22px !important; border-bottom: 2px solid #e63946 !important; }
+            .header::after { display: none !important; }
+            .name-block h1 { color: #111 !important; -webkit-text-fill-color: #111 !important; }
+            .name-block h1 span { color: #e63946 !important; -webkit-text-fill-color: #e63946 !important; }
+            .title-pill { background: #e63946 !important; color: white !important; -webkit-text-fill-color: white !important; }
+            .chip { background: #f5f5f5 !important; color: #111 !important; }
+            .summary-bar { border-left: 3px solid #e63946 !important; }
+            .summary-bar p, .summary-bar p strong { color: #333 !important; -webkit-text-fill-color: #333 !important; }
+            .exp-badge { background: #f5f5f5 !important; }
+            .exp-badge .num { color: #e63946 !important; -webkit-text-fill-color: #e63946 !important; }
+            .exp-badge .lbl, .exp-badge .lbl strong { color: #333 !important; -webkit-text-fill-color: #333 !important; }
+
+            .layout { display: block !important; }
+            .sidebar {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px 22px !important;
+                padding: 14px 22px !important;
+                border-bottom: 1px solid #ddd !important;
+            }
+            .ss-title { color: #e63946 !important; }
+            .ss-title::after { background: #ddd !important; }
+            .tag { background: #f0f0f0 !important; border-color: #ccc !important; color: #111 !important; }
+            .tg-label { color: #888 !important; -webkit-text-fill-color: #888 !important; }
+            .agile-badge { background: #fff0f1 !important; border-color: #e63946 !important; }
+            .agile-badge .ab-t { color: #111 !important; -webkit-text-fill-color: #111 !important; }
+            .agile-badge .ab-s { color: #555 !important; -webkit-text-fill-color: #555 !important; }
+            .soft-item { color: #333 !important; }
+            .tool-list li { color: #333 !important; }
+            .tool-list li::before { color: #e63946 !important; }
+            .edu-deg { color: #111 !important; }
+            .edu-sch { color: #555 !important; }
+            .edu-item { border-bottom-color: #eee !important; }
+
+            .main { padding: 14px 22px !important; }
+            .sec-title { color: #111 !important; page-break-after: avoid; }
+            .sec-title::after { background: #ddd !important; }
+            .sec-icon { background: #e63946 !important; }
+            .timeline::before { background: #ddd !important; }
+            .tl-item::before { background: #e63946 !important; border-color: white !important; box-shadow: 0 0 0 2px #e63946 !important; }
+            .tl-date { background: #111 !important; color: white !important; -webkit-text-fill-color: white !important; }
+            .tl-title { color: #111 !important; }
+            .tl-org { color: #e63946 !important; }
+            .tl-body { color: #333 !important; }
+            .tl-item { page-break-inside: avoid; }
+
+            .projects-grid { display: block !important; }
+            .proj-card { margin-bottom: 10px !important; border-color: #ddd !important; page-break-inside: avoid; }
+            .proj-num { color: #ddd !important; }
+            .proj-title { color: #111 !important; }
+            .proj-desc { color: #555 !important; }
+            .proj-tag { background: #f0f0f0 !important; color: #111 !important; }
+
+            .achieve-item { border-color: #ddd !important; page-break-inside: avoid; }
+            .ach-text strong { color: #111 !important; }
+            .ach-text span { color: #444 !important; }
+
+            .roles-box { background: #f9f9f9 !important; color: #333 !important; border: 1px solid #ddd !important; font-style: normal !important; }
+            .decl-box { border-color: #ddd !important; color: #444 !important; }
+            .decl-box strong { color: #111 !important; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="header-inner">
+        <div class="name-block">
+            <h1>Samreen <span>Khanam</span></h1>
+            <div class="title-pill">Full Stack Developer</div>
+            <div class="contact-row">
+                <a class="chip" href="tel:9100377902">📱 9100377902</a>
+                <a class="chip" href="mailto:samreenkhanam2416@gmail.com">✉️ samreenkhanam2416@gmail.com</a>
+                <a class="chip" href="#">📍 Hyderabad, India</a>
+                <a class="chip" href="https://www.linkedin.com/in/samreen-khanam-1387713b0" target="_blank">💼 LinkedIn</a>
+            </div>
+        </div>
+        <div class="exp-badge">
+            <div class="num">3+</div>
+            <div class="lbl">
+                <strong>Years of Experience</strong>
+                Incl. internship · 3 yrs 4 mo<br>
+                GHX — Healthcare Tech
+            </div>
+        </div>
+    </div>
+    <div class="summary-bar">
+        <p>Full-stack developer at <strong>GHX (Global HealthCare Exchange)</strong>, graduated from a JNTUH affiliated university.
+        Building enterprise Mobile &amp; Web applications using <strong>C#, Angular &amp; Microsoft SQL Server</strong> for 3+ years.
+        Strong in exception handling, debugging and runtime tracing — delivering stable, high-performance solutions.
+        <strong>Active collaborator, self-starter and quick learner</strong> who thrives in Agile environments.</p>
+    </div>
+</header>
+
+<!-- BODY -->
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div>
+            <div class="ss-title">Technical Skills</div>
+            <div class="tag-group">
+                <div class="tg-label">Languages &amp; Frameworks</div>
+                <div class="tags">
+                    <span class="tag">C#</span>
+                    <span class="tag">Angular</span>
+                    <span class="tag">.NET Core</span>
+                    <span class="tag">Xamarin Forms</span>
+                    <span class="tag">MVC</span>
+                    <span class="tag">HTML / CSS</span>
+                </div>
+            </div>
+            <div class="tag-group">
+                <div class="tg-label">Databases</div>
+                <div class="tags">
+                    <span class="tag">MS SQL Server</span>
+                    <span class="tag">SQLite</span>
+                </div>
+            </div>
+            <div class="tag-group">
+                <div class="tg-label">Platforms &amp; Services</div>
+                <div class="tags">
+                    <span class="tag">Azure AD</span>
+                    <span class="tag">Zebra ZPL</span>
+                    <span class="tag">Zebra EMDK</span>
+                    <span class="tag">Git</span>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="ss-title">Methodology</div>
+            <div class="agile-badge">
+                <div class="ab-t">⚡ Agile / Scrum</div>
+                <div class="ab-s">Daily stand-ups · Sprint planning<br>Code reviews · Iterative delivery</div>
+            </div>
+        </div>
+
+        <div>
+            <div class="ss-title">Soft Skills</div>
+            <div class="soft-list">
+                <div class="soft-item"><span class="sdot"></span>Cross-functional Collaboration</div>
+                <div class="soft-item"><span class="sdot"></span>Self-starter &amp; Quick Learner</div>
+                <div class="soft-item"><span class="sdot"></span>Problem Solving</div>
+                <div class="soft-item"><span class="sdot"></span>Debugging &amp; Root Cause Analysis</div>
+                <div class="soft-item"><span class="sdot"></span>Code Review &amp; Team Contribution</div>
+            </div>
+        </div>
+
+        <div>
+            <div class="ss-title">Tools &amp; IDE</div>
+            <ul class="tool-list">
+                <li>Visual Studio</li>
+                <li>Visual Studio Code</li>
+                <li>Tortoise Git</li>
+                <li>Jira — Issue Tracking</li>
+            </ul>
+        </div>
+
+        <div>
+            <div class="ss-title">Education</div>
+            <div class="edu-item">
+                <div class="edu-deg">B.Tech — Engineering</div>
+                <div class="edu-sch">Vaagdevi College of Engineering<br>Bollikunta, Telangana (JNTUH Affiliated)</div>
+            </div>
+            <div class="edu-item">
+                <div class="edu-deg">Intermediate</div>
+                <div class="edu-sch">SR Junior College, Warangal, Telangana</div>
+            </div>
+            <div class="edu-item">
+                <div class="edu-deg">S.S.C</div>
+                <div class="edu-sch">Oasis Public School, Warangal, Telangana</div>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <div class="section">
+            <div class="sec-title"><span class="sec-icon">💼</span> Experience</div>
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-head">
+                        <div>
+                            <div class="tl-title">Engineering Developer</div>
+                            <div class="tl-org">GHX — Global HealthCare Exchange</div>
+                        </div>
+                        <div class="tl-date">April 2023 – Present</div>
+                    </div>
+                    <div class="tl-body">
+                        <ul>
+                            <li>Building enterprise mobile &amp; web apps for healthcare supply chain management</li>
+                            <li>Developing with C#, Angular, Xamarin Forms and Microsoft SQL Server</li>
+                            <li>Participating in Agile ceremonies — sprint planning, stand-ups, and retrospectives</li>
+                            <li>Conducting code reviews and contributing to codebase quality and maintainability</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-head">
+                        <div>
+                            <div class="tl-title">Software Developer Intern</div>
+                            <div class="tl-org">GHX — Global HealthCare Exchange</div>
+                        </div>
+                        <div class="tl-date">Dec 2022 – Mar 2023</div>
+                    </div>
+                    <div class="tl-body">
+                        <ul>
+                            <li>Gained hands-on experience in full-stack development using C# and Angular</li>
+                            <li>Built the Internal Job Portal project (MVC architecture) end-to-end</li>
+                            <li>Engaged in Agile development processes and daily stand-up meetings</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="sec-title"><span class="sec-icon">🚀</span> Projects</div>
+            <div class="projects-grid">
+                <div class="proj-card">
+                    <div class="proj-num">01</div>
+                    <div class="proj-title">WAREHOUSE</div>
+                    <div class="proj-desc">Enterprise app for warehouse efficiency — Pick &amp; Putaway, Stock Management, Cycle Count, barcode scanning via Zebra/EMDK with offline-first support.</div>
+                    <div class="proj-tags">
+                        <span class="proj-tag">Xamarin</span>
+                        <span class="proj-tag">C#</span>
+                        <span class="proj-tag">Angular</span>
+                        <span class="proj-tag">SQLite</span>
+                    </div>
+                </div>
+                <div class="proj-card">
+                    <div class="proj-num">02</div>
+                    <div class="proj-title">DISTRIBUTION</div>
+                    <div class="proj-desc">Distribution modules with Cart Count, Delivery tracking, and Receiving — real-time updates, digital proof of delivery, and offline capability.</div>
+                    <div class="proj-tags">
+                        <span class="proj-tag">Xamarin</span>
+                        <span class="proj-tag">C#</span>
+                        <span class="proj-tag">Angular</span>
+                        <span class="proj-tag">SQLite</span>
+                    </div>
+                </div>
+                <div class="proj-card">
+                    <div class="proj-num">03</div>
+                    <div class="proj-title">INTERNAL JOB PORTAL</div>
+                    <div class="proj-desc">Full MVC web app — managers post jobs, employees apply by skill match. Role-based access, complete application workflow. (4-month Internship Project)</div>
+                    <div class="proj-tags">
+                        <span class="proj-tag">.NET Core MVC</span>
+                        <span class="proj-tag">C#</span>
+                        <span class="proj-tag">SQL Server</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="sec-title"><span class="sec-icon">🏆</span> Key Achievements</div>
+            <div class="achieve-list">
+                <div class="achieve-item">
+                    <div class="ach-icon">🔒</div>
+                    <div class="ach-text">
+                        <strong>Database Security &amp; Code Refactoring</strong>
+                        <span>Replaced inline SQL queries with parameterized queries — reduced SQL injection risk by 90% across the platform.</span>
+                    </div>
+                </div>
+                <div class="achieve-item">
+                    <div class="ach-icon">🖨️</div>
+                    <div class="ach-text">
+                        <strong>Zebra ZPL Printing Integration</strong>
+                        <span>Implemented label printing to mobile and stationary Zebra printers via Angular, ensuring seamless hardware support.</span>
+                    </div>
+                </div>
+                <div class="achieve-item">
+                    <div class="ach-icon">☁️</div>
+                    <div class="ach-text">
+                        <strong>Azure AD Shared Device Login</strong>
+                        <span>Verified and implemented secure Azure AD login flows for multi-user shared devices with proper session handling.</span>
+                    </div>
+                </div>
+                <div class="achieve-item">
+                    <div class="ach-icon">📷</div>
+                    <div class="ach-text">
+                        <strong>Image Capture Stability Fix</strong>
+                        <span>Debugged and resolved app crashes caused by device storage limitations, improving stability in low-storage conditions.</span>
+                    </div>
+                </div>
+                <div class="achieve-item">
+                    <div class="ach-icon">✅</div>
+                    <div class="ach-text">
+                        <strong>Code Quality &amp; Reviews</strong>
+                        <span>Active participant in team code reviews and refactoring efforts — maintaining clean, efficient, and scalable codebases.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="sec-title"><span class="sec-icon">🎯</span> Roles &amp; Responsibilities</div>
+            <div class="roles-box">
+                "I collaborate with cross-functional teams to design and build scalable software solutions, with a strong focus on code quality through thorough testing and debugging. My expertise includes database management, mobile &amp; web development, and delivering technical support across all stages of the software development lifecycle."
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="sec-title"><span class="sec-icon">📋</span> Declaration</div>
+            <div class="decl-box">
+                I hereby declare that the information provided above is true and correct to the best of my knowledge and belief. I take full responsibility for the accuracy of the stated details.<br><br>
+                <strong>Place:</strong> Hyderabad &nbsp;&nbsp;|&nbsp;&nbsp; <strong>Samreen Khanam
